@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#Prints "Best School" 10x
+
+n=10
+for ((i=1; i<=n; i++)); do echo "Best School";
+done
+
