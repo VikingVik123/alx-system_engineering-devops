@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Bash script that displays the content of the current directory
-cd || return "$(dirname "$0")"
+cd "$(dirname "$0")"
 
 # Use a for loop to iterate over non-hidden files
 for file in *
