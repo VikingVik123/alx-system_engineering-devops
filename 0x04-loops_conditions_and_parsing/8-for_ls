@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Bash script that displays the content of the current directory
+cd || return "$(dirname "$0")"
+
+# Use a for loop to iterate over non-hidden files
+for file in *
+do
+    # Check if it's a file (not a directory)
+    if [ -f "$file" ]; then
+        # Extract the part of the name after the first dash
+        name_part=$(echo "$file" | cut -d'-' -f2-)
+
+        # Display the result
+        echo "$name_part"
+    fi
+done
+
