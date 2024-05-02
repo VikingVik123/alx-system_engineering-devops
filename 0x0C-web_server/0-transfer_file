@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Function to display usage
+display_usage()
+{
+    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    echo "Example: $0 /path/to/local/file.txt 192.168.1.100 user /path/to/ssh_key"
+}
+
+# Check if number of arguments is less than 4
+if [ "$#" -lt 4 ]; then
+    display_usage
+    exit 1
+fi
+
+# Assigning parameters to variables
+file_path="$1"
+server_ip="$2"
+username="$3"
+ssh_key="$4"
+
+# Transfer file using scp with strict host key checking disabled
+scp -o StrictHostKeyChecking=no -i "$ssh_key" "$file_path" "$username@$server_ip":~/ 
+
+# Checking the exit status of scp
+if [ "$?" -eq 0 ]; then
+    echo "File transferred successfully."
+else
+    echo "Failed to transfer file."
+fi
