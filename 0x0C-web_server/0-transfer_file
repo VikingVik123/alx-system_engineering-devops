@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# Transfers a file from Holberton's client to another.
 # Function to display usage
 display_usage()
 {
