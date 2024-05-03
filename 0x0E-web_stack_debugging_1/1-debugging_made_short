@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Better seconfig of 0
+# Slimmer version of task 0
 
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 service nginx start
 kill "$(pgrep 'nginx' | head -1)"
+
