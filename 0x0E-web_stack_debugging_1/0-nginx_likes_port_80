@@ -1,7 +1,31 @@
 #!/usr/bin/env bash
 # Configures server to listen a port 80
 
-rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx restart
+if ! command -v nginx &> /dev/null; then
+    echo "Nginx is not installed."
+    exit 1
+fi
 
+# Check if the default configuration file exists
+if [ ! -f /etc/nginx/sites-available/default ]; then
+    echo "Default Nginx configuration file not found."
+    exit 1
+fi
+
+# Check if the default configuration file is already linked
+if [ -h /etc/nginx/sites-enabled/default ]; then
+    echo "Default Nginx configuration file is already linked."
+else
+    # Remove existing default configuration file if it's not a symlink
+    if [ -f /etc/nginx/sites-enabled/default ]; then
+        rm /etc/nginx/sites-enabled/default
+    fi
+    
+    # Create symbolic link to the default configuration file
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+    
+    echo "Linked default Nginx configuration file."
+fi
+
+# Restart Nginx service
+service nginx restart
