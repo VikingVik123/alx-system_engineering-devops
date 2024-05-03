@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
-# Script to configure server
+# Configures server to listen a port 80
 
+<<<<<<< HEAD
 # Update Nginx configuration to listen on port 80
 rm /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 service nginx restart
+=======
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+<<<<<<< HEAD
+service nginx restart
+=======
+service nginx restart
+>>>>>>> 012a3fd691c45a31ffa51d3dbcf91f07c3f67fbd
+>>>>>>> a43c707333acc53b4e6e0dde5a9f5baf75f3fea0
