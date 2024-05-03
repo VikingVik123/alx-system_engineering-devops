@@ -1,20 +1,18 @@
 # Set up SSH client configuration
 
-$ssh_config_path = '/etc/ssh/ssh_config'
+include stdlib
 
-file_line { 'Turn off password authentication':
-  ensure  => present,
-  path    => $ssh_config_path,
-  line    => 'PasswordAuthentication no',
-  match   => '^#?\s*PasswordAuthentication\s+',
+file_line { 'Turn off passwd auth':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '    PasswordAuthentication no',
   replace => true,
 }
 
-file_line { 'Declare identity file':
-  ensure  => present,
-  path    => $ssh_config_path,
-  line    => 'IdentityFile ~/.ssh/school',
-  match   => '^#?\s*IdentityFile\s+',
+file_line { 'Delare identity file':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '     IdentityFile ~/.ssh/school',
   replace => true,
 }
 
