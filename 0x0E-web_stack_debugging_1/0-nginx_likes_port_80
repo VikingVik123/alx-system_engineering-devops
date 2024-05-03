@@ -2,9 +2,6 @@
 # Script to configure server
 
 # Update Nginx configuration to listen on port 80
-sudo sed -i 's/listen\s*80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
-
-# Restart Nginx
-sudo systemctl restart nginx
-
-echo "Nginx configuration updated and restarted successfully."
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
