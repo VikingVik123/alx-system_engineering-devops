@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 # Script to configure Nginx with custom header
 
-apt-get -y update
-apt-get -y install nginx
+sudo apt update
+sudo apt install -y nginx
 
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
-echo "Error page" > /usr/share/nginx/html/custom_404.html
+hostname=$(hostname)
 
-sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/VikingVik123 permanent;\n\n\terror_page 404 \/custom_404.html;\n\tlocation = \/custom_404.html {\n\t\troot \/usr\/share\/nginx\/html;\n\t\tinternal;\n\t}/" /etc/nginx/sites-available/default
-sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\tadd_header X-Served-By \"$HOSTNAME\";/" /etc/nginx/nginx.conf
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    add_header X-Served-By $hostname;
+
+}" | sudo tee /etc/nginx/sites-available/default > /dev/null
+
+sudo systemctl restart nginx
+sudo systemctl enable nginx
 service nginx start
+
+echo "Nginx configured successfully with custom HTTP response header."
