@@ -1,31 +1,47 @@
 #!/usr/bin/env bash
 # Installs Nginx with custom configuration
 
-apt-get update
-apt-get install -y nginx
+function log {
+    echo -e "\n--- $1 ---\n"
+}
 
-mkdir -p /var/www/html
-touch /var/www/html/index.html
-echo "Hello World" > /var/www/html/index.html
-touch /var/www/html/404.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+# Update package list and install Nginx
+log "Updating package list and installing Nginx"
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
-printf %s "server {
+# Allow Nginx HTTP through the firewall
+log "Allowing Nginx HTTP through the firewall"
+sudo ufw allow 'Nginx HTTP'
+
+# Get the hostname of the server
+HOSTNAME=$(hostname)
+
+# Configure Nginx to add a custom header
+log "Configuring Nginx to include a custom HTTP header"
+cat <<EOF | sudo tee /etc/nginx/conf.d/custom_header.conf
+server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $HOSTNAME;
-    root   /var/www/html;
-    index  index.html index.htm;
 
-    location /redirect_me {
-        return 301 http://cuberule.com/;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+        add_header X-Served-By $HOSTNAME;
     }
+}
+EOF
 
-    error_page 404 /404.html;
-    location /404 {
-      root /var/www/html;
-      internal;
-    }
-}" > /etc/nginx/sites-available/default
+# Create a test HTML page
+log "Creating test HTML page"
+echo 'Hello World!' | sudo tee /var/www/html/index.nginx-debian.html
 
-service nginx restart
+# Restart Nginx to apply the changes
+log "Restarting Nginx"
+sudo service nginx restart
+
+log "Nginx installation and configuration complete!"
