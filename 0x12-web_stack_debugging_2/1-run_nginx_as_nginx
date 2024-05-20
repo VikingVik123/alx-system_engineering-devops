@@ -5,5 +5,5 @@ sudo sed -i "s/#user www-data;/user nginx;/" /etc/nginx/nginx.conf
 sudo sed -i "s/listen 80 default_server;/listen 8080 default_server;/" /etc/nginx/sites-available/default
 sudo sed -i "s/listen \[::\]:80 default_server;/listen \[::\]:8080 default_server;/" /etc/nginx/sites-available/default
 
-sudo systemctl stop apache2
-sudo systemctl start nginx
+sudo service apache stop
+sudo service nginx start
