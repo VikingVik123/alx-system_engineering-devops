@@ -39,4 +39,3 @@ if __name__ == "__main__":
 
     for task in completed:
         print("\t {}".format(task))
-
