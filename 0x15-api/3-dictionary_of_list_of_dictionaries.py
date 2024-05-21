@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Script to save the result in json file
+"""
 import json
 import requests
 
