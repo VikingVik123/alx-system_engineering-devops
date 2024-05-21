@@ -38,5 +38,3 @@ if __name__ == "__main__":
     # Export tasks to JSON
     with open('todo_all_employees.json', 'w') as f:
         json.dump(all_employee_tasks, f)
-
-    print("Tasks for all employees exported to todo_all_employees.json")
