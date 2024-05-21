@@ -2,9 +2,9 @@
 """
 Script that exports the  data to CSV
 """
+import csv
 import requests
 import sys
-import csv
 
 if __name__ == "__main__":
     # Check if the script is provided with the correct number of command-line arguments
@@ -51,8 +51,6 @@ if __name__ == "__main__":
     csv_filename = "{}.csv".format(employee_id)
     with open(csv_filename, mode='w', newline='') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        writer.writerow()
         for task in todos:
             writer.writerow([employee_id, username, task.get("completed"), task.get("title")])
-
-    print(f"Data has been exported to {csv_filename}")
