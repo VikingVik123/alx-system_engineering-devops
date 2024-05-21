@@ -26,7 +26,7 @@ if __name__ == "__main__":
     user = user_response.json()
 
     # Fetch todo list for the specified user
-    todos_response=requests.get(url + "todos", params={"userId": employee_id})
+    todos_response = requests.get(url +"todos", params={"userId": employee_id})
     if todos_response.status_code != 200:
         print(f"Failed to fetch TODO list for employee ID {employee_id}.")
         sys.exit(1)
