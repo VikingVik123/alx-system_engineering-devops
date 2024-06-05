@@ -2,9 +2,7 @@
 """
 Script to return number of subscribers
 """
-import csv
 import requests
-import json
 
 
 def number_of_subscribers(subreddit):
@@ -16,9 +14,8 @@ def number_of_subscribers(subreddit):
     }
 
     response = requests.get(url, allow_redirects=False, headers=headers)
-    if response.status_code == 404:
-        return 0
     if response.status_code != 200:
         return 0
+
     result = response.json().get("data")
     return result.get("subscribers")
